@@ -17,7 +17,4 @@ This is a Finance Tracking App built using the MERN (MongoDB, Express, React, No
 - **Database**: MongoDB
 - **Other Libraries**: 
   - `@tanstack/react-table` for table management
-  - `Multer` for file uploads
-  - `Validator` for input validation
-  - `Nodemailer` for sending emails
   - `CORS` for cross-origin resource sharing
