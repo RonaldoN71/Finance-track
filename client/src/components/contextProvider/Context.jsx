@@ -14,7 +14,7 @@ export const FinancialRecordsProvider = ({ children }) => {
       return;
     }
     try {
-      const response = await fetch(`http://localhost:3001/getAllByUserID/${user.id}`);
+      const response = await fetch(`https://finance-track-0hur.onrender.com/${user.id}`);
       console.log("Response status: ",response);
       if (response.ok) {
         const data = await response.json();
@@ -39,7 +39,7 @@ export const FinancialRecordsProvider = ({ children }) => {
 
   const addRecord = async (record) => {
     try {
-      const response = await fetch("http://localhost:3001/", {
+      const response = await fetch("https://finance-track-0hur.onrender.com/", {
         method: "POST",
         body: JSON.stringify(record),
         headers: {
@@ -58,7 +58,7 @@ export const FinancialRecordsProvider = ({ children }) => {
 
   const updateRecord = async (id, newRecord) => {
     try {
-      const response = await fetch(`http://localhost:3001/${id}`, {
+      const response = await fetch(`https://finance-track-0hur.onrender.com/${id}`, {
         method: "PUT",
         body: JSON.stringify(newRecord),
         headers: {
@@ -78,7 +78,7 @@ export const FinancialRecordsProvider = ({ children }) => {
 
   const deleteRecord = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3001/${id}`, {
+      const response = await fetch(`https://finance-track-0hur.onrender.com/${id}`, {
         method: "DELETE",
       });
 
