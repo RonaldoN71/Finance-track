@@ -23,6 +23,7 @@ const Dashboard = () => {
     <h2>Track your expense</h2>
     <Financial_rcf/>
     <div>Total Monthly: {totalMonthly}</div>
+    <div>You can edit each entry below by tapping on it</div>
     <Financial_rcl/>
     </div>
   )

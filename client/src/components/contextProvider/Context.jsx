@@ -5,7 +5,10 @@ export const FinancialRecordsContext = createContext(undefined);
 
 export const FinancialRecordsProvider = ({ children }) => {
   const [records, setRecords] = useState([]);
-  const { user, isLoaded } = useUser();  // Destructure isLoaded
+  const { user, isLoaded } = useUser();
+
+  // Base API URL for local development
+  const API_URL = "http://localhost:3001";
 
   // Fetch records when user is loaded
   const fetchRecord = async () => {
@@ -14,8 +17,8 @@ export const FinancialRecordsProvider = ({ children }) => {
       return;
     }
     try {
-      const response = await fetch(`https://finance-track-0hur.onrender.com/${user.id}`);
-      console.log("Response status: ",response);
+      const response = await fetch(`${API_URL}/getAllByUserID/${user.id}`);
+      console.log("Response status: ", response);
       if (response.ok) {
         const data = await response.json();
         console.log("Fetched record:", data);
@@ -28,18 +31,15 @@ export const FinancialRecordsProvider = ({ children }) => {
     }
   };
 
-  // Use useEffect to run fetch when user is fully loaded
   useEffect(() => {
     if (isLoaded && user?.id) {
       fetchRecord();
     }
   }, [isLoaded, user]);
 
-  // Add, update, and delete record functions (same as before)
-
   const addRecord = async (record) => {
     try {
-      const response = await fetch("https://finance-track-0hur.onrender.com/", {
+      const response = await fetch(`${API_URL}/`, {
         method: "POST",
         body: JSON.stringify(record),
         headers: {
@@ -58,7 +58,7 @@ export const FinancialRecordsProvider = ({ children }) => {
 
   const updateRecord = async (id, newRecord) => {
     try {
-      const response = await fetch(`https://finance-track-0hur.onrender.com/${id}`, {
+      const response = await fetch(`${API_URL}/${id}`, {
         method: "PUT",
         body: JSON.stringify(newRecord),
         headers: {
@@ -78,7 +78,7 @@ export const FinancialRecordsProvider = ({ children }) => {
 
   const deleteRecord = async (id) => {
     try {
-      const response = await fetch(`https://finance-track-0hur.onrender.com/${id}`, {
+      const response = await fetch(`${API_URL}/${id}`, {
         method: "DELETE",
       });
 

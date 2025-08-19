@@ -2,6 +2,7 @@ import React from 'react'
 import {useState} from 'react';
 import{useFinancialRecords} from './contextProvider/Context';
 import { useUser } from "@clerk/clerk-react";
+import {formatDate} from '../../utils/dates';
 
 function Financial_rcf() {
     const {user} = useUser();
@@ -10,6 +11,7 @@ function Financial_rcf() {
         description: '',
         amount: '',
         category: '',
+        customCategory: '',
         paymentMethod: ''
     });
     const handleChange = (e) =>{
@@ -19,11 +21,15 @@ function Financial_rcf() {
             [name]: value
         }))
     }
+  const finalCategory =
+  formData.category === "other" ? formData.customCategory : formData.category;
+
     const handleSubmit = async(e)=>{
         e.preventDefault();
-        const currentDate = new Date();
+        const currentDate = formatDate(new Date());
         const preparedData = {
             ...formData,
+            category: finalCategory,
             amount: parseInt(formData.amount),
             date: currentDate,
             userId: user?.id?? ""
@@ -50,7 +56,7 @@ function Financial_rcf() {
                 className="input"/>
             </div>
             <div className="form-field">
-                <label>Amount:</label>
+                <label>Amount(use - for expense out):</label>
                 <input type="number" required 
                 name ="amount"
                 value ={formData.amount}
@@ -59,17 +65,31 @@ function Financial_rcf() {
             </div>
             <div className="form-field">
                 <label>Category:</label>
-                <select required
-                value ={formData.category}
-                name="category"
-                onChange={handleChange}
-                className="input">
-                <option value="">Select category</option>
-                <option value="food">Food</option>
-                <option value="cloth">Cloth</option>
-                <option value="bills">Bills</option>
-                <option value="maintenance">Maintenance</option>
-                </select>
+               {formData.category === "other" ? (
+    <input
+      type="text"
+      placeholder="Enter custom category"
+      value={formData.customCategory}
+      name="customCategory"
+      onChange={handleChange}
+      className="input"
+    />
+  ) : (
+    <select
+      required
+      value={formData.category}
+      name="category"
+      onChange={handleChange}
+      className="input"
+    >
+      <option value="">Select category</option>
+      <option value="food">Food</option>
+      <option value="cloth">Cloth</option>
+      <option value="bills">Bills</option>
+      <option value="maintenance">Maintenance</option>
+      <option value="other">Other</option>
+    </select>
+  )}
             </div>
             <div className="form-field">
                 <label>Payment:</label>

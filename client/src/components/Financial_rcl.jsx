@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { useTable } from "react-table";
 import { useFinancialRecords } from "./contextProvider/Context";
+import {formatDate} from '../../utils/dates';
 
 const EditableCell = ({
   value: initialValue,
@@ -95,14 +96,8 @@ const FinancialRecordList = () => {
       },
       {
         Header: "Date",
-        accessor: "date",
-        Cell: (props) => (
-          <EditableCell
-            {...props}
-            updateRecord={updateCellRecord}
-            editable={false}
-          />
-        ),
+      accessor: "date",
+      Cell: ({ value }) => formatDate(value),
       },
       {
         Header: "Delete",
