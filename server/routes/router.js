@@ -13,7 +13,8 @@ router.get("/getAllByUserID/:userId",async(req,res)=>{
             return res.status(404).send("No records found for the user.")
         }
     } catch(err){
-        res.status(500).send(err);
+        console.error("Error in /getAllByUserID route:", err.message);
+    res.status(500).json({ error: "Internal server error", details: err.message })
     }
 })
 
