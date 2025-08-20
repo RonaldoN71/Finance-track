@@ -8,7 +8,7 @@ export const FinancialRecordsProvider = ({ children }) => {
   const { user, isLoaded } = useUser();
 
   // Base API URL for local development
-  const API_URL = process.env.REACT_APP_API_URL;
+  const API_URL = "https://finance-track-dqer.onrender.com";
 
   // Fetch records when user is loaded
   const fetchRecord = async () => {
